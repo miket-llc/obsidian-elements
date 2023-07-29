@@ -1,7 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting} from 'obsidian';
 
-// Remember to rename these classes and interfaces!
-
 interface ElementsPluginSettings {
 	homePath: string, 
 	mapsPath: string, 
@@ -137,7 +135,7 @@ class ElementsSettingTab extends PluginSettingTab {
 			.setName('Home Folder')
 			.setDesc('Folder for a start page or readme.')
 			.addText(text => text
-				.setPlaceholder('Folder name')
+				.setPlaceholder(DEFAULT_SETTINGS.homePath)
 				.setValue(this.plugin.settings.homePath)
 				.onChange(async (value) => {
 					this.plugin.settings.homePath = value;
@@ -146,12 +144,12 @@ class ElementsSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Maps Folder')
-			.setDesc('Folder for a start page or readme.')
+			.setDesc('Folder for a start page or pages.')
 			.addText(text => text
-				.setPlaceholder('Folder name')
+				.setPlaceholder(DEFAULT_SETTINGS.mapsPath)
 				.setValue(this.plugin.settings.mapsPath)
 				.onChange(async (value) => {
-					this.plugin.settings.homePath = value;
+					this.plugin.settings.mapsPath = value;
 					await this.plugin.saveSettings();
 				}));
 
@@ -159,10 +157,10 @@ class ElementsSettingTab extends PluginSettingTab {
 			.setName('Concepts Folder')
 			.setDesc('Concepts Folder.')
 			.addText(text => text
-				.setPlaceholder('Path to folder')
+				.setPlaceholder(DEFAULT_SETTINGS.conceptsPath)
 				.setValue(this.plugin.settings.conceptsPath)
 				.onChange(async (value) => {
-					this.plugin.settings.peoplePath = value;
+					this.plugin.settings.conceptsPath = value;
 					await this.plugin.saveSettings();
 				}));
 
@@ -192,7 +190,7 @@ class ElementsSettingTab extends PluginSettingTab {
 			.setName('Projects Folder')
 			.setDesc('Folder for Project Notes.')
 			.addText(text => text
-				.setPlaceholder('Path to folder')
+				.setPlaceholder(DEFAULT_SETTINGS.projectsPath)
 				.setValue(this.plugin.settings.projectsPath)
 				.onChange(async (value) => {
 					this.plugin.settings.projectsPath = value;

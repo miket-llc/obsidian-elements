@@ -1,22 +1,7 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting} from 'obsidian';
-
-interface ElementsPluginSettings {
-	homePath: string, 
-	mapsPath: string, 
-	conceptsPath: string, 
-	peoplePath: string,
-	meetingsPath: string,
-	projectsPath: string,
-}
-
-const DEFAULT_SETTINGS: ElementsPluginSettings = {
-	homePath: '/00 Home',
-	mapsPath: '/01 Maps',
-	conceptsPath: '/02 Concepts',
-	peoplePath: '/03 People',
-	meetingsPath: '/04 Meetings',
-	projectsPath: '/05 Projects',
-}
+import { CachedMetadata } from 'obsidian';
+import { App, getAllTags, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder } from 'obsidian';
+import { ElementsSettingTab, ElementsPluginSettings, DEFAULT_SETTINGS } from './settings/Settings';
+import {move_tfile_to_folder} from 'utils/Utils';
 
 export default class ElementsPlugin extends Plugin {
 	settings: ElementsPluginSettings;
@@ -27,7 +12,7 @@ export default class ElementsPlugin extends Plugin {
 		// This creates an icon in the left ribbon. See https://lucide.dev/icons. 
 		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements Plugin', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+			new Notice('Now you\'ve done it!');
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
@@ -46,6 +31,7 @@ export default class ElementsPlugin extends Plugin {
 				new ElementsSampleModal(this.app).open();
 			}
 		});
+
 		// This adds an editor command that can perform some operation on the current editor instance
 		this.addCommand({
 			id: 'sample-editor-command',
@@ -75,8 +61,51 @@ export default class ElementsPlugin extends Plugin {
 			}
 		});
 
+
+		this.addCommand({
+			id: 'sort-all-files-by-elements-tag',
+			name: 'Sort all files by elements tag',
+			checkCallback: (checking: boolean) => {
+				// Conditions to check
+				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (markdownView) {
+					// If checking is true, we're simply "checking" if the command can be run.
+					// If checking is false, then we want to actually perform the operation.
+					if (!checking) {
+						new ElementsSampleModal(this.app).open();
+					}
+
+					// This command will only show up in Command Palette when the check function returns true
+					return true;
+				}
+			}
+		});
+
+		this.addCommand({
+			id: 'move-to-most-appropriate-folder',
+			name: 'Move to most appropriate folder',
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				const file = view.file;
+				console.log(file);
+				console.log(file instanceof TFile);
+				if(file instanceof TFile) {
+					const cache = this.app.metadataCache.getFileCache(file);
+					const tags = getAllTags((cache as CachedMetadata));
+					for (let i = 0; i < this.settings.core_concepts.length; i++) {
+						const concept = this.settings.core_concepts[i];
+						if(tags?.includes('#' + concept.tag)) {
+							//this.app.vault.rename(file, concept.folder + '/' + file.name);
+							move_tfile_to_folder(file, concept.folder)
+							break;
+						}
+					}
+				}
+			}
+		});
+
+
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new ElementsSettingTab(this.app, this));
+		this.addSettingTab(new ElementsSettingTab(this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -87,6 +116,13 @@ export default class ElementsPlugin extends Plugin {
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
+
+	getBestFolder(file: TFile) : TFolder {
+		const bestFolder = new TFolder();
+		
+		return bestFolder;
+	}
+
 
 	onunload() {
 
@@ -114,87 +150,5 @@ class ElementsSampleModal extends Modal {
 	onClose() {
 		const {contentEl} = this;
 		contentEl.empty();
-	}
-}
-
-class ElementsSettingTab extends PluginSettingTab {
-	plugin: ElementsPlugin;
-
-	constructor(app: App, plugin: ElementsPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const {containerEl} = this;
-
-		containerEl.empty();
-		containerEl.createEl('h2', {text: "Notes Folders"})
-
-		new Setting(containerEl)
-			.setName('Home Folder')
-			.setDesc('Folder for a start page or readme.')
-			.addText(text => text
-				.setPlaceholder(DEFAULT_SETTINGS.homePath)
-				.setValue(this.plugin.settings.homePath)
-				.onChange(async (value) => {
-					this.plugin.settings.homePath = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
-			.setName('Maps Folder')
-			.setDesc('Folder for a start page or pages.')
-			.addText(text => text
-				.setPlaceholder(DEFAULT_SETTINGS.mapsPath)
-				.setValue(this.plugin.settings.mapsPath)
-				.onChange(async (value) => {
-					this.plugin.settings.mapsPath = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
-			.setName('Concepts Folder')
-			.setDesc('Concepts Folder.')
-			.addText(text => text
-				.setPlaceholder(DEFAULT_SETTINGS.conceptsPath)
-				.setValue(this.plugin.settings.conceptsPath)
-				.onChange(async (value) => {
-					this.plugin.settings.conceptsPath = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
-				.setName('People Folder')
-				.setDesc('Folder to store Person notes.')
-				.addText(text => text
-					.setPlaceholder('Path to folder')
-					.setValue(this.plugin.settings.peoplePath)
-					.onChange(async (value) => {
-						this.plugin.settings.peoplePath = value;
-						await this.plugin.saveSettings();
-					}));
-
-		new Setting(containerEl)
-			.setName('Meetings Folder')
-			.setDesc('Folder for Meeting notes.')
-			.addText(text => text
-				.setPlaceholder('Path to folder')
-				.setValue(this.plugin.settings.meetingsPath)
-				.onChange(async (value) => {
-					this.plugin.settings.meetingsPath = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl)
-			.setName('Projects Folder')
-			.setDesc('Folder for Project Notes.')
-			.addText(text => text
-				.setPlaceholder(DEFAULT_SETTINGS.projectsPath)
-				.setValue(this.plugin.settings.projectsPath)
-				.onChange(async (value) => {
-					this.plugin.settings.projectsPath = value;
-					await this.plugin.saveSettings();
-				}));
 	}
 }

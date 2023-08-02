@@ -26,6 +26,8 @@ export const DEFAULT_SETTINGS: ElementsPluginSettings = {
         {type: "Projects", folder: "/05 Projects", tag: "meeting"},
         {type: "PrivateMeetings", folder: "/07 Private/1-1s", tag: "meeting/1-1"},
     ],
+    default_concept_folder: "/02 Concepts",
+    folders_to_ignore: ["/10 Files"],
     command_timeout: 5,
     templates_folder: "",
     templates_pairs: [["", ""]],
@@ -44,6 +46,8 @@ export const DEFAULT_SETTINGS: ElementsPluginSettings = {
 
 export interface ElementsPluginSettings {
     core_concepts: Array<ElementsTypeSettings>;
+    default_concept_folder: string;
+    folders_to_ignore: Array<string>;
     command_timeout: number;
     templates_folder: string;
     templates_pairs: Array<[string, string]>;

@@ -1,4 +1,5 @@
-import { log_error } from "./Log";
+import { logError } from "./Log";
+
 
 export class ElementsError extends Error {
     constructor(msg: string, public console_msg?: string) {
@@ -8,7 +9,7 @@ export class ElementsError extends Error {
     }
 }
 
-export async function errorWrapper<T>(
+export async function errorWrapperAsync<T>(
     fn: () => Promise<T>,
     msg: string
 ): Promise<T> {
@@ -16,9 +17,9 @@ export async function errorWrapper<T>(
         return await fn();
     } catch (e) {
         if (!(e instanceof ElementsError)) {
-            log_error(new ElementsError(msg, e.message));
+            logError(new ElementsError(msg, e.message));
         } else {
-            log_error(e);
+            logError(e);
         }
         return null as T;
     }
@@ -28,7 +29,7 @@ export function errorWrapperSync<T>(fn: () => T, msg: string): T {
     try {
         return fn();
     } catch (e) {
-        log_error(new ElementsError(msg, e.message));
+        logError(new ElementsError(msg, e.message));
         return null as T;
     }
 }

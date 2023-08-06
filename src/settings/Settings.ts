@@ -1,3 +1,8 @@
+
+// import { errorWrapperSync, ElementsError } from "../utils/Error";
+//import { FileSuggest, FileSuggestMode } from "./suggesters/FileSuggester";
+// import { arraymove, get_tfiles_from_folder } from "../utils/Utils";
+//import { log_error } from "../utils/Log";
 export interface ElementsTypeSettings {
     type: string;
     folder: string;
@@ -56,3 +61,5 @@ export interface ElementsPluginSettings {
     startup_templates: Array<string>;
     enable_ribbon_icon: boolean;
 }
+
+

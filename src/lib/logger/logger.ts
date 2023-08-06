@@ -1,5 +1,4 @@
-import { Logger as Winston, createLogger, format, transports } from 'winston'
-import { errorWrapperSync } from '../../utils/Error';
+import { createLogger, format, transports } from 'winston'
 
 export type logLevel = 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'
 

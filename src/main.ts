@@ -2,6 +2,7 @@ import { CachedMetadata } from 'obsidian';
 import { App, getAllTags, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder, normalizePath } from 'obsidian';
 import { ElementsSettingTab, ElementsPluginSettings, DEFAULT_SETTINGS } from './settings/Settings';
 import { move_tfile_to_folder as moveTFile } from 'utils/Utils';
+import { log } from './lib/logger/logger';
 
 // =============================================================================================
 //  Elements Obisidan Plugin 
@@ -15,6 +16,8 @@ export default class ElementsPlugin extends Plugin {
 	public async onload() {
 		// We must load ElementsPluginSettings as soon as the plugin is loaded.
 		await this.loadSettings();
+
+		log('debug', 'loading Elements plugin');
 
 		// Create Elements icon in the left ribbon. See https://lucide.dev/icons. 
 		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements Plugin', (evt: MouseEvent) => {
@@ -118,6 +121,8 @@ export default class ElementsPlugin extends Plugin {
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+
+		log('info', 'Elements plugin loaded.')
 	}
 
 	// -----------------------------------------------------------------------------------------

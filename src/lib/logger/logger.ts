@@ -39,6 +39,21 @@ export default class Logger {
         }
     }
 
+    static removeFileTransport( filename: string ): IResult<boolean, Error> {
+        try {
+            if(Logger._fileTransportMap.has(filename)) {
+                const fileTransport = Logger._fileTransportMap.get(filename)
+                Logger._fileTransportMap.delete(filename)
+                Logger._logger.remove(fileTransport)
+                return ok(true)
+            } else {
+                return fail(new Error(`File transport does not exist for ${filename}`))
+            }
+        } catch(e) {
+            return fail(new Error(`Error removing file transport for ${filename}: ${maybe(e.message).valueOr('unknown error')}`))
+        }
+    }
+    
     static log( level: logLevel, message: string ) {
        Logger._logger.log(level, message)
     }

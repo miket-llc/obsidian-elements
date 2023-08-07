@@ -1,4 +1,4 @@
-import { logError } from "./Log";
+import { logError } from "../ui/notice";
 
 
 export class ElementsError extends Error {

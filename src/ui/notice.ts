@@ -1,5 +1,5 @@
 import { Notice } from "obsidian";
-import { ElementsError } from "./Error";
+import { ElementsError } from "../utils/Error";
 
 export function logMessage(msg: string): void {
     const notice = new Notice("", 15000);

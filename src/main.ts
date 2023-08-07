@@ -1,9 +1,9 @@
 import { CachedMetadata } from 'obsidian';
 import { App, getAllTags, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder, normalizePath } from 'obsidian';
 import { SettingsTab } from './ui/settings-tab';
-import { DEFAULT_SETTINGS, ElementsPluginSettings } from './settings/settings';
+import { DEFAULT_SETTINGS, ElementsPluginSettings } from './lib/settings/settings';
 import { move_tfile_to_folder as moveTFile } from 'utils/Utils';
-import { log } from './lib/logger/logger';
+import { log } from './lib/log/logger';
 
 // =============================================================================================
 //  Elements Obisidan Plugin 

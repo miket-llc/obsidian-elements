@@ -7,6 +7,11 @@ export function log( level: logLevel, message: string ) {
     Logger.log(level, message)
 }
 
+/**
+ * Simple, powerful logging. Abstracts away the underlying logging framework
+ * for maximum ease of use and future-proofing. 
+ * @warn This is a singleton class. Do not instantiate it.
+ */
 export default class Logger {
     private static _logLevel: logLevel = 'info'
     private static _consoleTranport = new transports.Console();
@@ -21,9 +26,20 @@ export default class Logger {
         )
     })
 
+    /**
+     * Gets the current log level of the console transport.
+     */
     static get consoleLevel(): logLevel { return Logger._consoleTranport.level as logLevel }
+    /**
+     * Sets the current log level of the console transport.
+     */
     static set consoleLevel(level: logLevel) { Logger._consoleTranport.level = level }
 
+    /**
+     * Adds a new file transport to the logger. You are responsible for ensuring that the path and filename are valid.
+     * @param filename Path and filename of the log file to add.
+     * @param level @link{logLevel} filter for this file. All levels above this level will be logged.
+     */
     static addFileTransport( filename: string, level: logLevel ): IResult<boolean, Error> {
         try {
             if(!Logger._fileTransportMap.has(filename)) {
@@ -39,6 +55,11 @@ export default class Logger {
         }
     }
 
+    /**
+     * Removes a previously added file transport to the logger. 
+     * @param filename Path and filename of the log file previously added.
+     * @returns true if the file transport was removed, an Error object if it did not exist or the removal failed for some other reason.
+     */
     static removeFileTransport( filename: string ): IResult<boolean, Error> {
         try {
             if(Logger._fileTransportMap.has(filename)) {
@@ -54,6 +75,12 @@ export default class Logger {
         }
     }
     
+    /**
+     * Safely loges a message at the provided @type{logLevel} to all active log transports. Note that, by design, exactly one
+     * console is transport is always active. Each transport has it's own log level filter.
+     * @param level Level of this message. If the @type(logLevel) is below the level of the transport, the message will not be logged.
+     * @param message Message to add to each log transport.
+     */
     static log( level: logLevel, message: string ) {
        Logger._logger.log(level, message)
     }

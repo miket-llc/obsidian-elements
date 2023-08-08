@@ -1,8 +1,6 @@
 import { createLogger, format, transports } from 'winston'
-import { Either, Maybe, ok, fail, maybe} from 'typescript-monads'
 
 export type loggerLevel = 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'
-export type loggerEvent = 'error' | 'warn' | 'info' | 'verbose' | 'debug' | 'silly'
 
 export function log( level: loggerLevel, message: string ) {
     Logger.log(level, message)
@@ -41,8 +39,8 @@ export default class Logger {
      * @param filename Path and filename of the log file to add.
      * @param level @link{logLevel} filter for this file. All levels above this level will be logged.
      * @warn If a file transport with the same filename has already been added, this method will do nothing.
-     * @warn By design, this api will not throw errors for file errors. You must register for error events using
-     * the @link{Logger.on} method.
+     * @warn By design, this api will not throw errors for file errors. We highly recommend registering a
+     * callback witn the link @link(onError) method to handle file errors.
      */
     static addFileLog( filename: string, level: loggerLevel ): boolean {
         if(!Logger._fileTransportMap.has(filename)) {
@@ -72,7 +70,7 @@ export default class Logger {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static on( event: loggerEvent, callback: (info: any) => void ) {
-        Logger._logger.on(event, callback)
+    static onError( callback: (error: Error) => void ) {
+        Logger._logger.on('error', callback)
     }
 }

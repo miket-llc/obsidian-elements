@@ -3,7 +3,7 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder } from
 import { SettingsTab } from '../ui/settings-tab';
 // import { DEFAULT_SETTINGS } from './lib/settings/settings';
 // import { move_tfile_to_folder as moveTFile } from 'lib/fsutil/tfile';
-import { log } from '../lib/log/logger';
+import { log } from '../lib/logger/logger';
 
 export default class Elements extends Plugin {
 
@@ -16,7 +16,9 @@ export default class Elements extends Plugin {
 		// Create Elements icon in the left ribbon. See https://lucide.dev/icons. 
 		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
-			new Notice('Now you\'ve done it');
+			//new Notice('Now you\'ve done it');
+
+			new Notice('Now you\'ve really done it');
 		});
 		// Add aditional icon eleement styling or processing 
 		ribbonIconEl.addClass('elements-plugin-icon-class');

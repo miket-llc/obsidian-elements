@@ -1,5 +1,5 @@
 import { MarkdownView, Editor, MarkdownFileInfo } from "obsidian";
-import { log } from "../../lib/log/logger";
+import { log } from "../logger/logger";
 import { CommandBase, CommandProperties } from "./BasicCommand";
 
 /**

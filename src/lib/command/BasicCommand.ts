@@ -1,5 +1,5 @@
 import { Command } from 'obsidian';
-import { log } from '../../lib/log/logger';
+import { log } from '../logger/logger';
 import { Either } from 'typescript-monads';
 import { fail } from 'assert';
 

@@ -1,3 +1,5 @@
+import esbuildSvelte from "esbuild-svelte";
+import sveltePreprocess from "svelte-preprocess";
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
@@ -41,7 +43,7 @@ const context = await esbuild.context({
 });
 
 if (prod) {
-	await context.rebuild();
+	await context.rebuild()
 	process.exit(0);
 } else {
 	await context.watch();

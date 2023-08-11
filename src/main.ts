@@ -1,24 +1,28 @@
-import { CachedMetadata } from 'obsidian';
-import { App, getAllTags, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder, normalizePath } from 'obsidian';
+//import { CachedMetadata,  } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, TFile, TFolder } from 'obsidian';
 import { SettingsTab } from './ui/settings-tab';
-import { DEFAULT_SETTINGS, ElementsPluginSettings } from './lib/settings/settings';
-import { move_tfile_to_folder as moveTFile } from 'lib/fsutil/tfile';
+// import { DEFAULT_SETTINGS } from './lib/settings/settings';
+// import { move_tfile_to_folder as moveTFile } from 'lib/fsutil/tfile';
 import { log } from './lib/log/logger';
 
 // =============================================================================================
 //  Elements Obisidan Plugin 
 // =============================================================================================
 export default class ElementsPlugin extends Plugin {
-	settings: ElementsPluginSettings;
+	private static _plugin: ElementsPlugin;
+	
+	public static get plugin(): ElementsPlugin { return ElementsPlugin._plugin }
+	private static set plugin( pi: ElementsPlugin ) { ElementsPlugin._plugin = pi }
 
 	// -----------------------------------------------------------------------------------------
 	//  onload()
 	// -----------------------------------------------------------------------------------------
 	public async onload() {
-		// We must load ElementsPluginSettings as soon as the plugin is loaded.
-		await this.loadSettings();
+		ElementsPlugin.plugin = this;
 
-		log('debug', 'loading Elements plugin');
+		log('debug', 'Loading Elements plugin');
+		// We should load ElementsPluginSettings as soon as the plugin is loaded.
+		await this.loadSettings();
 
 		// Create Elements icon in the left ribbon. See https://lucide.dev/icons. 
 		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements Plugin', (evt: MouseEvent) => {
@@ -31,7 +35,6 @@ export default class ElementsPlugin extends Plugin {
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
 		const statusBarItemEl = this.addStatusBarItem();
 		statusBarItemEl.setText('Elements is active.');
-
 
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
@@ -79,37 +82,18 @@ export default class ElementsPlugin extends Plugin {
 			}
 		});
 
-		this.addCommand({
-			id: 'move-all-files-to-best-folder',
-			name: "Moves all notes to the most appropriate folder",
-			callback: async () => {
-				await this.moveAllNotesToBestFolder();
-			}
-		});
+		// this.addCommand({
+		// 	id: 'move-all-files-to-best-folder',
+		// 	name: "Moves all notes to the most appropriate folder",
+		// 	callback: async () => {
+		// 		await this.moveAllNotesToBestFolder();
+		// 	}
+		// });
 
-		this.addCommand({
-			id: 'move-to-most-appropriate-folder',
-			name: 'Move note to most appropriate folder',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				const file = view.file;
-				let success = false;
-				if(file instanceof TFile) {
-					const cache = this.app.metadataCache.getFileCache(file);
-					const tags = getAllTags((cache as CachedMetadata));
-					for (let i = 0; i < this.settings.core_concepts.length; i++) {
-						const concept = this.settings.core_concepts[i];
-						if(tags?.includes('#' + concept.tag)) {
-							moveTFile(file, concept.folder)
-							success = true;
-							break;
-						}
-					}
-					if(!success) {
-						moveTFile(file, this.settings.default_concept_folder);
-					}
-				}
-			}
-		});
+		// this.addCommand({
+			
+		// 	}
+		// });
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new SettingsTab(this));
@@ -138,28 +122,34 @@ export default class ElementsPlugin extends Plugin {
 	// loadSettings()
 	// -----------------------------------------------------------------------------------------
 	private async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const start = new Date().getTime()
+		log('debug', 'Loading Elements plugin settings...')
+		//this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		log('debug', `Elements plugin settings loaded in ${new Date().getTime()-start}ms.`)
 	}
 
 	// -----------------------------------------------------------------------------------------
 	// saveSettings()
 	// -----------------------------------------------------------------------------------------
 	public async saveSettings() {
-		await this.saveData(this.settings);
+		const start = new Date().getTime()
+		log('debug', 'Saving Elements plugin settings...')
+		//await this.saveData(this.settings);
+		log('debug', `Elements plugin settings loaded in ${new Date().getTime()-start}ms.`)
 	}
 
 	// -----------------------------------------------------------------------------------------
 	//   isFileInIgnoredFolder
 	// -----------------------------------------------------------------------------------------
-	protected isFileInIgnoredFolder(tfile: TFile): boolean {
-		// for each setting in the string array...
-		return ( this.settings.folders_to_ignore.findIndex((str: string) => {
-				// return true to findIndex if the string starts with the path of the file
-				return tfile.path.indexOf(normalizePath(str)) == 0;
-			// return true to the caller of this methodif findIndex returns a value other than -1
-			// meaning that we found a match
-			}) != -1);
-	}
+	// protected isFileInIgnoredFolder(tfile: TFile): boolean {
+	// 	// for each setting in the string array...
+	// 	return ( this.settings.folders_to_ignore.findIndex((str: string) => {
+	// 			// return true to findIndex if the string starts with the path of the file
+	// 			return tfile.path.indexOf(normalizePath(str)) == 0;
+	// 		// return true to the caller of this methodif findIndex returns a value other than -1
+	// 		// meaning that we found a match
+	// 		}) != -1);
+	// }
 
 	// -----------------------------------------------------------------------------------------
 	//   matchFileToTypeSettings
@@ -171,39 +161,39 @@ export default class ElementsPlugin extends Plugin {
 	// -----------------------------------------------------------------------------------------
 	//   async moveAllToBestFolder(): Promise<void>
 	// -----------------------------------------------------------------------------------------
-	private async moveAllNotesToBestFolder(): Promise<void> {
-		console.log('got to MoveAllToBestFolder async function');
-		const files = this.app.vault.getMarkdownFiles();
-		let success = false;
-		console.log("length of markdown files array: " + files.length);
-		for(let i = 0; i < files.length; i++) {
-			const file = files[i];
-			if(this.isFileInIgnoredFolder(file))
-			{
-				console.log("SKIPPING" + file.basename)
-			} else { 
-				console.log("PROCESSING" + file.basename);
-			}
-            const cache = this.app.metadataCache.getFileCache(files[i]);
-			const tags = getAllTags((cache as CachedMetadata));
-			if(tags?.length > 0) {
-				console.log(files[i].basename)
-				console.log(tags);
-				for (let j = 0; i < this.settings.core_concepts.length; j++) {
-					const concept = this.settings.core_concepts[j];
-					if(tags?.includes('#' + concept.tag)) {
-						//move_tfile_to_folder(tfile, concept.folder)
-						console.log(concept.folder + '/' + file.name);
-						success = true
-						break
-					}
-				}
-			}
-			if(!success) {
-				// move_tfile_to_folder(files[i], this.settings.default_concept_folder);
-			}
-		}
-	}
+	// private async moveAllNotesToBestFolder(): Promise<void> {
+	// 	console.log('got to MoveAllToBestFolder async function');
+	// 	const files = this.app.vault.getMarkdownFiles();
+	// 	let success = false;
+	// 	console.log("length of markdown files array: " + files.length);
+	// 	for(let i = 0; i < files.length; i++) {
+	// 		const file = files[i];
+	// 		if(this.isFileInIgnoredFolder(file))
+	// 		{
+	// 			console.log("SKIPPING" + file.basename)
+	// 		} else { 
+	// 			console.log("PROCESSING" + file.basename);
+	// 		}
+    //         const cache = this.app.metadataCache.getFileCache(files[i]);
+	// 		const tags = getAllTags((cache as CachedMetadata));
+	// 		if(tags?.length > 0) {
+	// 			console.log(files[i].basename)
+	// 			console.log(tags);
+	// 			for (let j = 0; i < this.settings.core_concepts.length; j++) {
+	// 				const concept = this.settings.core_concepts[j];
+	// 				if(tags?.includes('#' + concept.tag)) {
+	// 					//move_tfile_to_folder(tfile, concept.folder)
+	// 					console.log(concept.folder + '/' + file.name);
+	// 					success = true
+	// 					break
+	// 				}
+	// 			}
+	// 		}
+	// 		if(!success) {
+	// 			// move_tfile_to_folder(files[i], this.settings.default_concept_folder);
+	// 		}
+	// 	}
+	// }
 
 	// -----------------------------------------------------------------------------------------
 	//  getBestFolder(tfile: TFile): string

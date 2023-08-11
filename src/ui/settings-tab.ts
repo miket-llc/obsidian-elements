@@ -15,22 +15,22 @@ export class SettingsTab extends PluginSettingTab {
         this.containerEl.createEl("h2", { text: "General Settings" });
     }
 
-    add_template_folder_setting(): void {
-        new Setting(this.containerEl)
-            .setName("Template folder location")
-            .setDesc("Files in this folder will be available as templates.")
-            .addSearch((cb) => {
-                // new FolderSuggest(cb.inputEl);
-                cb.setPlaceholder("Example: folder1/folder2")
-                    .setValue(this.plugin.settings.templates_folder)
-                    .onChange((new_folder) => {
-                        this.plugin.settings.templates_folder = new_folder;
-                        this.plugin.saveSettings();
-                    });
-                // @ts-ignore
-                cb.containerEl.addClass("Elements_search");
-            });
-    }
+    // add_template_folder_setting(): void {
+    //     new Setting(this.containerEl)
+    //         .setName("Template folder location")
+    //         .setDesc("Files in this folder will be available as templates.")
+    //         .addSearch((cb) => {
+    //             // new FolderSuggest(cb.inputEl);
+    //             cb.setPlaceholder("Example: folder1/folder2")
+    //                 .setValue(this.plugin.settings.templates_folder)
+    //                 .onChange((new_folder) => {
+    //                     this.plugin.settings.templates_folder = new_folder;
+    //                     this.plugin.saveSettings();
+    //                 });
+    //             // @ts-ignore
+    //             cb.containerEl.addClass("Elements_search");
+    //         });
+    // }
 
     add_internal_functions_setting(): void {
         const desc = document.createDocumentFragment();
@@ -63,33 +63,33 @@ export class SettingsTab extends PluginSettingTab {
             "platforms."
         );
 
-        new Setting(this.containerEl)
-            .setName("Syntax Highlighting on Desktop")
-            .setDesc(desktopDesc)
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.syntax_highlighting)
-                    .onChange((syntax_highlighting) => {
-                        this.plugin.settings.syntax_highlighting =
-                            syntax_highlighting;
-                        this.plugin.saveSettings();
-                        //this.plugin.event_handler.update_syntax_highlighting();
-                    });
-            });
+        // new Setting(this.containerEl)
+        //     .setName("Syntax Highlighting on Desktop")
+        //     .setDesc(desktopDesc)
+        //     .addToggle((toggle) => {
+        //         toggle
+        //             .setValue(this.plugin.settings.syntax_highlighting)
+        //             .onChange((syntax_highlighting) => {
+        //                 this.plugin.settings.syntax_highlighting =
+        //                     syntax_highlighting;
+        //                 this.plugin.saveSettings();
+        //                 //this.plugin.event_handler.update_syntax_highlighting();
+        //             });
+        //     });
 
-        new Setting(this.containerEl)
-            .setName("Syntax Highlighting on Mobile")
-            .setDesc(mobileDesc)
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.syntax_highlighting_mobile)
-                    .onChange((syntax_highlighting_mobile) => {
-                        this.plugin.settings.syntax_highlighting_mobile =
-                            syntax_highlighting_mobile;
-                        this.plugin.saveSettings();
-                        //this.plugin.event_handler.update_syntax_highlighting();
-                    });
-            });
+        // new Setting(this.containerEl)
+        //     .setName("Syntax Highlighting on Mobile")
+        //     .setDesc(mobileDesc)
+        //     .addToggle((toggle) => {
+        //         toggle
+        //             .setValue(this.plugin.settings.syntax_highlighting_mobile)
+        //             .onChange((syntax_highlighting_mobile) => {
+        //                 this.plugin.settings.syntax_highlighting_mobile =
+        //                     syntax_highlighting_mobile;
+        //                 this.plugin.saveSettings();
+        //                 //this.plugin.event_handler.update_syntax_highlighting();
+        //             });
+        //     });
     }
 
     add_auto_jump_to_cursor(): void {
@@ -104,18 +104,18 @@ export class SettingsTab extends PluginSettingTab {
             "."
         );
 
-        new Setting(this.containerEl)
-            .setName("Automatic jump to cursor")
-            .setDesc(desc)
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.auto_jump_to_cursor)
-                    .onChange((auto_jump_to_cursor) => {
-                        this.plugin.settings.auto_jump_to_cursor =
-                            auto_jump_to_cursor;
-                        this.plugin.saveSettings();
-                    });
-            });
+        // new Setting(this.containerEl)
+        //     .setName("Automatic jump to cursor")
+        //     .setDesc(desc)
+        //     .addToggle((toggle) => {
+        //         toggle
+        //             .setValue(this.plugin.settings.auto_jump_to_cursor)
+        //             .onChange((auto_jump_to_cursor) => {
+        //                 this.plugin.settings.auto_jump_to_cursor =
+        //                     auto_jump_to_cursor;
+        //                 this.plugin.saveSettings();
+        //             });
+        //     });
     }
 
     add_trigger_on_new_file_creation_setting(): void {
@@ -131,21 +131,21 @@ export class SettingsTab extends PluginSettingTab {
             "This can be dangerous if you create new files with unknown / unsafe content on creation. Make sure that every new file's content is safe on creation."
         );
 
-        new Setting(this.containerEl)
-            .setName("Trigger Elements on new file creation")
-            .setDesc(desc)
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.trigger_on_file_creation)
-                    .onChange((trigger_on_file_creation) => {
-                        this.plugin.settings.trigger_on_file_creation =
-                            trigger_on_file_creation;
-                        this.plugin.saveSettings();
-                        // this.plugin.event_handler.update_trigger_file_on_creation();
-                        // Force refresh
-                        this.display();
-                    });
-            });
+        // new Setting(this.containerEl)
+        //     .setName("Trigger Elements on new file creation")
+        //     .setDesc(desc)
+        //     .addToggle((toggle) => {
+        //         toggle
+        //             .setValue(this.plugin.settings.trigger_on_file_creation)
+        //             .onChange((trigger_on_file_creation) => {
+        //                 this.plugin.settings.trigger_on_file_creation =
+        //                     trigger_on_file_creation;
+        //                 this.plugin.saveSettings();
+        //                 // this.plugin.event_handler.update_trigger_file_on_creation();
+        //                 // Force refresh
+        //                 this.display();
+        //             });
+        //     });
     }
 
     add_ribbon_icon_setting(): void {
@@ -154,32 +154,32 @@ export class SettingsTab extends PluginSettingTab {
             "Show Elements icon in sidebar ribbon, allowing you to quickly use templates anywhere."
         );
 
-        new Setting(this.containerEl)
-            .setName("Show icon in sidebar")
-            .setDesc(desc)
-            .addToggle((toggle) => {
-                toggle
-                    .setValue(this.plugin.settings.enable_ribbon_icon)
-                    .onChange((enable_ribbon_icon) => {
-                        this.plugin.settings.enable_ribbon_icon =
-                            enable_ribbon_icon;
-                        this.plugin.saveSettings();
-                        if (this.plugin.settings.enable_ribbon_icon) {
-                            this.plugin
-                                .addRibbonIcon(
-                                    "Elements-icon",
-                                    "Elements",
-                                    async () => {
-                                        // this.plugin.fuzzy_suggester.insert_template();
-                                    }
-                                )
-                                .setAttribute("id", "rb-Elements-icon");
-                        } else {
-                            document
-                                .getElementById("rb-Elements-icon")
-                                ?.remove();
-                        }
-                    });
-            });
+        // new Setting(this.containerEl)
+        //     .setName("Show icon in sidebar")
+        //     .setDesc(desc)
+        //     .addToggle((toggle) => {
+        //         toggle
+        //             .setValue(this.plugin.settings.enable_ribbon_icon)
+        //             .onChange((enable_ribbon_icon) => {
+        //                 this.plugin.settings.enable_ribbon_icon =
+        //                     enable_ribbon_icon;
+        //                 this.plugin.saveSettings();
+        //                 if (this.plugin.settings.enable_ribbon_icon) {
+        //                     this.plugin
+        //                         .addRibbonIcon(
+        //                             "Elements-icon",
+        //                             "Elements",
+        //                             async () => {
+        //                                 // this.plugin.fuzzy_suggester.insert_template();
+        //                             }
+        //                         )
+        //                         .setAttribute("id", "rb-Elements-icon");
+        //                 } else {
+        //                     document
+        //                         .getElementById("rb-Elements-icon")
+        //                         ?.remove();
+        //                 }
+        //             });
+        //     });
     }
 }

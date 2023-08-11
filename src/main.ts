@@ -1,1 +1,1 @@
-export { default } from './plugin/elements'
+export { default } from './plugin/Elements'

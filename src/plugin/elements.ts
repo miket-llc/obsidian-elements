@@ -5,27 +5,16 @@ import { SettingsTab } from '../ui/settings-tab';
 // import { move_tfile_to_folder as moveTFile } from 'lib/fsutil/tfile';
 import { log } from '../lib/log/logger';
 
-// =============================================================================================
-//  Elements Obisidan Plugin 
-// =============================================================================================
 export default class Elements extends Plugin {
-	private static _plugin: Elements;
-	
-	public static get plugin(): Elements { return Elements._plugin }
-	private static set plugin( pi: Elements ) { Elements._plugin = pi }
 
-	// -----------------------------------------------------------------------------------------
-	//  onload()
-	// -----------------------------------------------------------------------------------------
 	public async onload() {
-		Elements.plugin = this;
 
 		log('debug', 'Loading Elements plugin');
-		// We should load ElementsPluginSettings as soon as the plugin is loaded.
+		// We should load settings as soon as the plugin is loaded.
 		await this.loadSettings();
 
 		// Create Elements icon in the left ribbon. See https://lucide.dev/icons. 
-		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements Plugin', (evt: MouseEvent) => {
+		const ribbonIconEl = this.addRibbonIcon('atom', 'Elements', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
 			new Notice('Now you\'ve done it');
 		});
@@ -110,17 +99,10 @@ export default class Elements extends Plugin {
 		log('info', 'Elements plugin loaded.')
 	}
 
-	// -----------------------------------------------------------------------------------------
-	//  Plugin.onunload()
-	// -----------------------------------------------------------------------------------------
 	public onunload() {
 
 	}
 
-
-	// -----------------------------------------------------------------------------------------
-	// loadSettings()
-	// -----------------------------------------------------------------------------------------
 	private async loadSettings() {
 		const start = new Date().getTime()
 		log('debug', 'Loading Elements plugin settings...')
@@ -128,9 +110,6 @@ export default class Elements extends Plugin {
 		log('debug', `Elements plugin settings loaded in ${new Date().getTime()-start}ms.`)
 	}
 
-	// -----------------------------------------------------------------------------------------
-	// saveSettings()
-	// -----------------------------------------------------------------------------------------
 	public async saveSettings() {
 		const start = new Date().getTime()
 		log('debug', 'Saving Elements plugin settings...')
@@ -138,9 +117,6 @@ export default class Elements extends Plugin {
 		log('debug', `Elements plugin settings loaded in ${new Date().getTime()-start}ms.`)
 	}
 
-	// -----------------------------------------------------------------------------------------
-	//   isFileInIgnoredFolder
-	// -----------------------------------------------------------------------------------------
 	// protected isFileInIgnoredFolder(tfile: TFile): boolean {
 	// 	// for each setting in the string array...
 	// 	return ( this.settings.folders_to_ignore.findIndex((str: string) => {
@@ -151,16 +127,11 @@ export default class Elements extends Plugin {
 	// 		}) != -1);
 	// }
 
-	// -----------------------------------------------------------------------------------------
-	//   matchFileToTypeSettings
-	// -----------------------------------------------------------------------------------------
 	private indexOfTypeSetting(tfile: TFile): number {  
 		return -1;
 	}
 
-	// -----------------------------------------------------------------------------------------
-	//   async moveAllToBestFolder(): Promise<void>
-	// -----------------------------------------------------------------------------------------
+	
 	// private async moveAllNotesToBestFolder(): Promise<void> {
 	// 	console.log('got to MoveAllToBestFolder async function');
 	// 	const files = this.app.vault.getMarkdownFiles();
@@ -195,9 +166,6 @@ export default class Elements extends Plugin {
 	// 	}
 	// }
 
-	// -----------------------------------------------------------------------------------------
-	//  getBestFolder(tfile: TFile): string
-	// -----------------------------------------------------------------------------------------
 	private getBestFolder(file: TFile) : TFolder {
 		const bestFolder = new TFolder();
 		
@@ -205,9 +173,6 @@ export default class Elements extends Plugin {
 	}
 }
 
-// =============================================================================================
-//  Elmeents Command Modal Dialog 
-// =============================================================================================
 class ElementsCommandModal extends Modal {
 	constructor(app: App, 
 				desc: string, 

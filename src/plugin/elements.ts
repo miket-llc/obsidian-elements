@@ -1,4 +1,3 @@
-/// <reference types="svelte" />
 //import { CachedMetadata,  } from 'obsidian';
 import {
 	App,

@@ -1,7 +1,7 @@
 import { log } from "../logger/logger";
 import { Either } from "typescript-monads";
 import { fail } from "assert";
-import { CommandBase, CommandProperties } from "./BasicCommand";
+import { CommandBase, type CommandProperties } from "./BasicCommand";
 
 /**
  * Abstract base class for commands that need to check before they can be invoked. This check is not just for safety. For example, an

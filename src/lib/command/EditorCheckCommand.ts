@@ -1,4 +1,4 @@
-import { Command, MarkdownView, Editor, MarkdownFileInfo } from 'obsidian';
+import { type Command, MarkdownView, Editor, type MarkdownFileInfo } from 'obsidian';
 import { log } from '../logger/logger';
 import { Either } from 'typescript-monads';
 import { fail } from 'assert';

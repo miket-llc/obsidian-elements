@@ -43,8 +43,7 @@ const context = await esbuild.context({
 });
 
 if (prod) {
-	await context.rebuild()
-	process.exit(0);
+	await context.rebuild().catch(process.exit(1))
 } else {
 	await context.watch();
 }

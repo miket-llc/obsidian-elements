@@ -1,6 +1,6 @@
-import { MarkdownView, Editor, MarkdownFileInfo } from "obsidian";
+import { MarkdownView, Editor, type MarkdownFileInfo } from "obsidian";
 import { log } from "../logger/logger";
-import { CommandBase, CommandProperties } from "./BasicCommand";
+import { CommandBase, type CommandProperties } from "./BasicCommand";
 
 /**
  * Abstract base class for Obsidian Editor commands that should be checked if they can be invoked. This check is not just for

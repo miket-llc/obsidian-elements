@@ -1,9 +1,8 @@
-import { type Command } from 'obsidian';
+import {type Command } from 'obsidian';
+import {type CommandProperties } from './CommandProperties'
 import { log } from '../logger/logger';
 import { Either } from 'typescript-monads';
 import { fail } from 'assert';
-
-export type CommandProperties = Pick<Command, 'id' | 'name' | 'hotkeys' | 'icon' | 'mobileOnly' | 'repeatable'>
 
 /**
  * Base class for all Elements Plugin commands. Can be inherited directly for command implementations that don't required

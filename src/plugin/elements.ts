@@ -15,6 +15,8 @@ import { SettingsTab } from "../ui/settings-tab";
 // import { move_tfile_to_folder as moveTFile } from 'lib/fsutil/tfile';
 import { log } from "../lib/logger/logger";
 
+export type IElements 
+
 export default class Elements extends Plugin {
 	public async onload() {
 		log("info", "Loading Elements plugin...");

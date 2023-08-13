@@ -1,5 +1,6 @@
 const TYPES = {
-    Plugin: Symbol.for("Plugin")
-};
+    IElements: Symbol.for("IElements"),
+    Logger: Symbol.for("Logger"),
+}
 
-export { TYPES };
+export default TYPES

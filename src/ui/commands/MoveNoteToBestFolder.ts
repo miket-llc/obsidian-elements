@@ -1,4 +1,4 @@
-import { EditorCommand } from '../../lib/command/EditorCommand';
+import { EditorCommand } from './EditorCommand';
 // import { MarkdownView, CachedMetadata, getAllTags } from 'obsidian';
 // import { Either } from 'typescript-monads';
 

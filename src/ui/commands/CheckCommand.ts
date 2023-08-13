@@ -1,4 +1,4 @@
-import { log } from '../logger/logger'
+//import { log } from '../../lib/logger/logger'
 import { Either } from 'typescript-monads'
 import { fail } from 'assert'
 import { CommandBase } from './BasicCommand'
@@ -42,7 +42,7 @@ export abstract class CheckCommand extends CommandBase {
 			return this.executeCheck().match({
 				// Yeah, we sort of eat the error here for the good of the user. Better check the Obsidian log.
 				left: (e: Error) => {
-					log("error", e.message);
+					//log("error", e.message);
 				},
 				// Return the result of the check.
 				right: (b: boolean) => {
@@ -52,10 +52,10 @@ export abstract class CheckCommand extends CommandBase {
 		} else {
 			this.execute().match({
 				left: (e: Error) => {
-					log("error", e.message);
+					//log("error", e.message);
 				},
 				right: () => {
-					log("debug", `Command ${typeof this} executed successfully.`);
+					//log("debug", `Command ${typeof this} executed successfully.`);
 				},
 			});
 		}

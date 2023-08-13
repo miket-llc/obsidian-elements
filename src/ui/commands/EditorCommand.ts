@@ -1,5 +1,5 @@
 import { MarkdownView, Editor, type MarkdownFileInfo } from "obsidian";
-import { log } from "../logger/logger";
+//import { log } from "../../lib/logger/logger";
 import { CommandBase } from "./BasicCommand";
 import { type CommandProperties } from './CommandProperties'
 
@@ -28,10 +28,10 @@ export abstract class EditorCommand extends CommandBase {
 
 		this.execute().match({
 			left: (e: Error) => {
-				log('error', e.message);
+				//log('error', e.message);
 			},
 			right: () => {
-				log('debug', `Command ${typeof this} executed successfully.`);
+				//log('debug', `Command ${typeof this} executed successfully.`);
 			},
 		});
 	}

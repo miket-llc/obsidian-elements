@@ -1,6 +1,5 @@
 import {type Command } from 'obsidian';
 import {type CommandProperties } from './CommandProperties'
-import { log } from '../logger/logger';
 import { Either } from 'typescript-monads';
 import { fail } from 'assert';
 
@@ -56,8 +55,8 @@ export abstract class CommandBase {
     */
     private callbackHandler(): void {
         this.execute().match({
-            left: (e: Error) => { log('error', e.message) },
-            right: () => { log('debug', `Command ${typeof this} executed successfully.`)}
+            left: (e: Error) => { throw e },
+            right: () => { console.log('debug', `Command ${typeof this} executed successfully.`)}
         })
     }
 }

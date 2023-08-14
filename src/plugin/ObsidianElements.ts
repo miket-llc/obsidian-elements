@@ -8,13 +8,14 @@ import { Plugin } from 'obsidian'
 @injectable()
 export class ObsidianElements implements Elements {
     private _logger: Logger
-    //private _plugin: Plugin
+    private _plugin: Plugin
     
     constructor(
         @inject(TYPES.Logger) logger: Logger,
+        @inject(TYPES.Plugin) plugin: Plugin
     ) {
         this._logger = logger
-        //this._plugin = plugin
+        this._plugin = plugin
     }
 
     public  onload(): void {

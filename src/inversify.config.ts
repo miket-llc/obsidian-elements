@@ -6,7 +6,6 @@ import { ObsidianElements } from './plugin/ObsidianElements';
 import { Plugin } from 'obsidian';
 import { Either, either } from 'typescript-monads';
 
-
 const container = new Container()
 
 container.bind(TYPES.Elements).to(ObsidianElements).inSingletonScope()

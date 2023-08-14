@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import { inject, injectable } from 'inversify'
-import TYPES from './types'
+import TYPES from '../types'
 import { type Logger } from '../lib/logger/Logger'
-import { type Elements } from '../elements/core/Elements'
+import { type Elements } from '../elements/core/'
 
 @injectable()
 export class ObsidianElements implements Elements {

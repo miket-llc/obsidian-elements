@@ -1,8 +1,8 @@
 import "reflect-metadata"
 import { Container } from "inversify"
 import TYPES from "./types"
-import { WinstonLogger } from '../lib/logger/winston/WinstonLogger';
-import { ObsidianElements } from './ObsidianElements';
+import { WinstonLogger } from './lib/logger/winston/WinstonLogger';
+import { ObsidianElements } from './plugin/ObsidianElements';
 
 
 const container = new Container()

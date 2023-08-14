@@ -1,8 +1,9 @@
 # Obsidian Sample Plugin
 
-This is an Obsidian plugin to add meetings, contacts, and workflow to Obsidian.
+This is an plugin to add useful automation and ontological classification to Obsidian.
 
-This project is experimental and may be subject to change without notice.
+This project is extremely experimental at this phase, so fetures, code, and architecture are subject to change without notice.
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## Contributing
+
+Contact Mike T LLC through this repo if you are interested in contributing or have comments and suggestions.

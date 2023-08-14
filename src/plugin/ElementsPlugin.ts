@@ -9,11 +9,9 @@ export default class ElementsPlugin extends Plugin {
     constructor(app: App, manifest: PluginManifest) {
         super(app, manifest)
         setPluginSingleton(this)
-        log('info', 'ElementsPlugin Constructor reached')
     }
 
     public async onload() {
-        log('info', 'ElementsPlugin onload() reached')
         container.get<Elements>(TYPES.Elements).onload()
     }
 }

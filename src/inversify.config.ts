@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { Container } from "inversify"
 import TYPES from "./types"
-import { WinstonLogger } from './lib/logger/winston/WinstonLogger';
+import { WinstonLogger } from './lib/logger/winston-logger/WinstonLogger';
 import { ObsidianElements } from './plugin/ObsidianElements';
 import { Plugin } from 'obsidian';
 import { Either, either } from 'typescript-monads';

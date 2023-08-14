@@ -1,16 +1,20 @@
 import { App, Plugin, type PluginManifest } from 'obsidian'
 import { type Elements } from '../elements/core';
 import container from '../inversify.config';
+import { log } from '../lib/logger';
 import TYPES from '../types';
 
 export default class ElementsPlugin extends Plugin {
 
     constructor(app: App, manifest: PluginManifest) {
         super(app, manifest)
+        setPluginSingleton(this)
+        log('info', 'ElementsPlugin Constructor reached')
     }
 
     public async onload() {
-        container.get<Elements>(TYPES.Elements).onload();
+        log('info', 'ElementsPlugin onload() reached')
+        container.get<Elements>(TYPES.Elements).onload()
     }
 }
 
@@ -223,6 +227,7 @@ export default class ElementsPlugin extends Plugin {
 
 // import Component from "../ui/components/Component.svelte";
 //import { log } from '../lib/logger/logger';
+import { setPluginSingleton } from '../inversify.config';
 
 // export const VIEW_TYPE_EXAMPLE = "example-view-two";
 

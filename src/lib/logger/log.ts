@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import { type Logger } from './Logger'
 import { type LogLevel } from './LogLevel'
 
@@ -18,3 +17,13 @@ function addLogger(logger: Logger) {
 function removeLogger(logger: Logger) {
     _loggers.remove(logger)
 }
+
+function loggerCount(): number {
+    return _loggers.length
+}
+
+function isInitialized(): boolean {
+    return _loggers.length > 0
+}
+
+export { log, addLogger, removeLogger, loggerCount, isInitialized }

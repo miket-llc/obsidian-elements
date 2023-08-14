@@ -1,5 +1,5 @@
 const TYPES = {
-    IElements: Symbol.for("IElements"),
+    Elements: Symbol.for("Elements"),
     Logger: Symbol.for("Logger"),
 }
 

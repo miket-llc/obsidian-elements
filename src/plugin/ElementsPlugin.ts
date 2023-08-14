@@ -1,5 +1,5 @@
 import { App, Plugin, type PluginManifest } from 'obsidian'
-import { type IElements } from './Elements';
+import { type Elements } from '../elements/core';
 import container from './inversify.config';
 import TYPES from './types';
 
@@ -12,8 +12,8 @@ export default class ElementsPlugin extends Plugin {
     public async onload() {
         //log('info', 'Loading Elements plugin...');
         console.log(`Loading Elements plugin...${Date.now()}`)
-        console.log(`container.get ${container.get<IElements>(TYPES.IElements)}`);
-        container.get<IElements>(TYPES.IElements).onLoad();
+        console.log(`container.get ${container.get<Elements>(TYPES.Elements)}`);
+        container.get<Elements>(TYPES.Elements).onload();
     }
 }
 

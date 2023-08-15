@@ -3,12 +3,16 @@ import { type Elements } from '../elements/core';
 import container from '../inversify.config';
 import { log } from '../lib/logger';
 import TYPES from '../types';
+import { IResultOk.ok } from 'typescript-monads';
 
 export default class ElementsPlugin extends Plugin {
 
     constructor(app: App, manifest: PluginManifest) {
         super(app, manifest)
-        setPluginSingleton(this)
+        setPluginSingleton(this).match({
+            fail: (e: Error) => { log('error', e.message); throw e },
+            ok: () => { log('debug', 'Plugin instance added to container.') }
+        })
     }
 
     public async onload() {

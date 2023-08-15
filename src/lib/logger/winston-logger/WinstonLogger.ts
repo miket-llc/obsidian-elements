@@ -1,7 +1,9 @@
 import { createLogger, format, transports } from 'winston'
 import { type LogLevel } from '../LogLevel'
 import { type Logger } from '../Logger';
+import { injectable } from 'inversify';
 
+@injectable()
 export class WinstonLogger implements Logger {
 
     private _consoleTranport = new transports.Console();

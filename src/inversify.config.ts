@@ -22,7 +22,7 @@ container.bind(TYPES.Logger).to(WinstonLogger).inSingletonScope()
  * this value can't be set successfully.
  */
 export function setPluginSingleton(plugin: Plugin): Result<void, Error> {
-   return ( container.bind(TYPES.Plugin).toConstantValue(plugin) == undefined || null)  
+   return ( container.bind(TYPES.Plugin).toConstantValue(plugin) !== undefined || null)  
       ? ok(undefined) 
       : fail(new Error("Plugin singleton could not be set."))
 }

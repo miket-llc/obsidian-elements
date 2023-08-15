@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import { inject, injectable } from 'inversify'
 import TYPES from '../types'
-import { type Logger } from '../lib/logger/Logger'
+import { type Logger, log } from '../lib/logger'
 import { type Elements } from '../elements/core/'
 import { Plugin } from 'obsidian'
+import { Result, ok, resultToPromise, } from 'typescript-monads'
 
 @injectable()
 export class ObsidianElements implements Elements {
@@ -18,6 +19,11 @@ export class ObsidianElements implements Elements {
         this._plugin = plugin
     }
 
-    public  onload(): void {
+    async setup(): Promise<Result<void, Error>> {
+        const start = Date.now().valueOf();
+        log('debug', `Initializing obsidian-elements...`)
+
+        log('debug', `...obsidian-elements initializaton complete. (${Date.now().valueOf() - start}ms)`)
+        return resultToPromise(ok(undefined));
     }
 }

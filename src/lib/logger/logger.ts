@@ -2,7 +2,7 @@ import { type LogLevel } from './LogLevel'
 
 export interface Logger {
     /**
-     * Returns the current log level of the dedfault log transport. All levels above this level are being logged.
+     * Returns the current log level of the dedfault log transport. All levels above this will be logged.
      */
     level: LogLevel
 

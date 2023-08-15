@@ -1,10 +1,10 @@
 import "reflect-metadata"
 import { Container } from "inversify"
 import TYPES from "./types"
-import { WinstonLogger } from './lib/logger/winston-logger/WinstonLogger';
+import { WinstonLogger } from './lib/logger/winston-logger';
 import { ObsidianElements } from './plugin/ObsidianElements';
 import { Plugin } from 'obsidian';
-import { Either, either } from 'typescript-monads';
+import { Result, ok, fail, OkResult } from 'typescript-monads';
 
 const container = new Container()
 
@@ -21,9 +21,8 @@ container.bind(TYPES.Logger).to(WinstonLogger).inSingletonScope()
  * @returns true if the Plugin singleton was set, false otherwise. We recommend panicking if
  * this value can't be set successfully.
  */
-export function setPluginSingleton(plugin: Plugin): boolean {
-   return ( container.bind(TYPES.Plugin).toConstantValue(plugin) !== undefined || null) 
-   ? true : false
+export function setPluginSingleton(plugin: Plugin): Result<void, Error> {
+   return ( container.bind(TYPES.Plugin).toConstantValue(plugin) == undefined || null)  
+      ? ok(undefined) 
+      : fail(new Error("Plugin singleton could not be set."))
 }
-
-export default container

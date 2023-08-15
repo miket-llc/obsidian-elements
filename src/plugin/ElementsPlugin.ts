@@ -1,9 +1,8 @@
 import { App, Plugin, type PluginManifest } from 'obsidian'
-import { type Elements } from '../elements/core';
-import container from '../inversify.config';
-import { log } from '../lib/logger';
-import TYPES from '../types';
-import { IResultOk.ok } from 'typescript-monads';
+import { type Elements } from '../elements/core'
+import container from '../inversify.config'
+import { log } from '../lib/logger'
+import TYPES from '../types'
 
 export default class ElementsPlugin extends Plugin {
 

@@ -4,7 +4,7 @@ import TYPES from "./types"
 import { WinstonLogger } from './lib/logger/winston-logger';
 import { ObsidianElements } from './plugin/ObsidianElements';
 import { Plugin } from 'obsidian';
-import { Result, ok, fail, OkResult } from 'typescript-monads';
+import { Result, ok, fail } from 'typescript-monads';
 
 const container = new Container()
 
@@ -26,3 +26,5 @@ export function setPluginSingleton(plugin: Plugin): Result<void, Error> {
       ? ok(undefined) 
       : fail(new Error("Plugin singleton could not be set."))
 }
+
+export default container

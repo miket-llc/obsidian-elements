@@ -15,7 +15,7 @@ export default class ElementsPlugin extends Plugin {
     }
 
     public async onload() {
-        container.get<Elements>(TYPES.Elements).setup()
+        container.get<Elements>(TYPES.ElementsCore).setup()
     }
 }
 

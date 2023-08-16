@@ -7,7 +7,7 @@ import { Plugin } from 'obsidian'
 import { Result, ok, resultToPromise, } from 'typescript-monads'
 
 @injectable()
-export class ObsidianElements implements Elements {
+export class ElementsCore implements Elements {
     private _logger: Logger
     private _plugin: Plugin
     
@@ -22,6 +22,13 @@ export class ObsidianElements implements Elements {
     async setup(): Promise<Result<void, Error>> {
         const start = Date.now().valueOf();
         log('debug', `Initializing obsidian-elements...`)
+        
+        // load settings
+
+        // initialize command subsystem
+
+        // initialize the ui
+
 
         log('debug', `...obsidian-elements initializaton complete. (${Date.now().valueOf() - start}ms)`)
         return resultToPromise(ok(undefined));

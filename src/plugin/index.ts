@@ -1,3 +1,3 @@
+export * from './ElementsCore';
 export * from './ElementsPlugin';
-export * from './ObsidianElements';
-export * from './Settings';
+export * from './ElementsSettings';

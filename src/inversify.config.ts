@@ -2,13 +2,13 @@ import "reflect-metadata"
 import { Container } from "inversify"
 import TYPES from "./types"
 import { WinstonLogger } from './lib/logger/winston-logger';
-import { ObsidianElements } from './plugin/ObsidianElements';
+import { ElementsCore } from './plugin/ElementsCore';
 import { Plugin } from 'obsidian';
 import { Result, ok, fail } from 'typescript-monads';
 
 const container = new Container()
 
-container.bind(TYPES.Elements).to(ObsidianElements).inSingletonScope()
+container.bind(TYPES.ElementsCore).to(ElementsCore).inSingletonScope()
 container.bind(TYPES.Logger).to(WinstonLogger).inSingletonScope()
 
 /**

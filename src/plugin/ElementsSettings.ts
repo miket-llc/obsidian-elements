@@ -4,7 +4,7 @@ export interface ElementsTypeSettings {
     tag: string;
 }
 
-export const DEFAULT_SETTINGS: ElementsPluginSettings = {
+export const DEFAULT_SETTINGS: ElementsSettings = {
     core_concepts: [
         {type: "Concept", folder: "/02 Concepts", tag: "concept"},
         {type: "Person", folder: "/03 People", tag: "person"},
@@ -31,7 +31,7 @@ export const DEFAULT_SETTINGS: ElementsPluginSettings = {
     enable_ribbon_icon: true,
 };
 
-export interface ElementsPluginSettings {
+export interface ElementsSettings {
     core_concepts: Array<ElementsTypeSettings>;
     default_concept_folder: string;
     folders_to_ignore: Array<string>;

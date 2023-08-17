@@ -1,6 +1,6 @@
 export interface Setting {
     key: string;
-    value : string;
+    valueStr : string;
     defaultValue: string;
     displayName: string;
 }

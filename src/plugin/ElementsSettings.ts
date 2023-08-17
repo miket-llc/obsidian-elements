@@ -1,10 +1,29 @@
+import { type Settings, type Setting } from '../elements/settings/';
+import { inject, injectable } from 'inversify';
+import { Result, ok } from 'typescript-monads';
+
 export interface ElementsTypeSettings {
     type: string;
     folder: string;
     tag: string;
 }
 
-export const DEFAULT_SETTINGS: ElementsSettings = {
+@injectable()
+export class ElementsSettings implements Settings {
+    constructor(
+        @inject("Settings") private settings: Settings
+    ) {
+        
+    }
+
+    async load(): Promise<Result<void, Error>> { return Result.ok(undefined) }
+    async save(): Promise<Result<void, Error>> { return Result.ok(undefined) }
+
+    getSetting(key: string): Result<Setting, Error> { return ok(null)} 
+    setSetting(key: string, value: string): Result<void, Error> {return ok(undefined)}
+}
+
+export const DEFAULT_SETTINGS = {
     core_concepts: [
         {type: "Concept", folder: "/02 Concepts", tag: "concept"},
         {type: "Person", folder: "/03 People", tag: "person"},
@@ -29,7 +48,7 @@ export const DEFAULT_SETTINGS: ElementsSettings = {
     enabled_templates_hotkeys: [""],
     startup_templates: [""],
     enable_ribbon_icon: true,
-};
+}
 
 export interface ElementsSettings {
     core_concepts: Array<ElementsTypeSettings>;

@@ -1,10 +1,12 @@
 import 'reflect-metadata'
 import { inject, injectable } from 'inversify'
+import container from '../inversify.config'
 import TYPES from '../types'
 import { type Logger, log } from '../lib/logger'
 import { type Elements } from '../elements/core/'
 import { Plugin } from 'obsidian'
 import { Result, ok, resultToPromise, } from 'typescript-monads'
+import { type Settings } from '../elements/settings'
 
 @injectable()
 export class ElementsCore implements Elements {
@@ -24,6 +26,7 @@ export class ElementsCore implements Elements {
         log('debug', `Initializing obsidian-elements...`)
         
         // load settings
+        container.get<Settings>(TYPES.Settings).load()
 
         // initialize command subsystem
 

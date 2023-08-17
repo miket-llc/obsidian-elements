@@ -8,7 +8,7 @@ export default class ElementsPlugin extends Plugin {
 
     constructor(app: App, manifest: PluginManifest) {
         super(app, manifest)
-        setPluginSingleton(this).match({
+        setPlugin(this).match({
             fail: (e: Error) => { log('error', e.message); throw e },
             ok: () => { log('debug', 'Plugin instance added to container.') }
         })
@@ -228,7 +228,7 @@ export default class ElementsPlugin extends Plugin {
 
 // import Component from "../ui/components/Component.svelte";
 //import { log } from '../lib/logger/logger';
-import { setPluginSingleton } from '../inversify.config';
+import { setPlugin } from '../inversify.config';
 
 // export const VIEW_TYPE_EXAMPLE = "example-view-two";
 

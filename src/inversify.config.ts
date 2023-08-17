@@ -21,7 +21,7 @@ container.bind(TYPES.Logger).to(WinstonLogger).inSingletonScope()
  * @returns true if the Plugin singleton was set, false otherwise. We recommend panicking if
  * this value can't be set successfully.
  */
-export function setPluginSingleton(plugin: Plugin): Result<void, Error> {
+export function setPlugin(plugin: Plugin): Result<void, Error> {
    return ( container.bind(TYPES.Plugin).toConstantValue(plugin) !== undefined || null)  
       ? ok(undefined) 
       : fail(new Error("Plugin singleton could not be set."))

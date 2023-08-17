@@ -1,9 +1,19 @@
-import { type Setting } from './Setting'
+
 import { Result } from 'typescript-monads'
 
 export interface Settings {
-    getSetting(key: string): Result<Setting, Error>
-    setSetting(key: string, value: string): Result<void, Error>
-    load(): Promise<Result<void, Error>>
-    save(): Promise<Result<void, Error>>
+    idType: string,
+    coreConcepts: Array<string>
+    userConcepts: Array<string>
+}
+
+export const DEFAULT_SETTINGS = {
+    idType: "uuid",
+    coreConcepts: [
+        "Concept",
+        "Person",
+        "Meeting",
+        "Institutions",
+        "Projects",
+    ],
 }

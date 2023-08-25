@@ -26,7 +26,7 @@ export class ElementsCore implements Elements {
         log('debug', `Initializing obsidian-elements...`)
         
         // load settings
-        //container.get<Settings>(TYPES.Settings).load()
+        // container.get<Settings>(TYPES.Settings).load()
 
         // initialize command subsystem
 

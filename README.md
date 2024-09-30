@@ -1,4 +1,4 @@
-# Obsidian Sample Plugin
+# Elements Prototype
 
 This is an plugin to add useful automation and ontological classification to Obsidian.
 
